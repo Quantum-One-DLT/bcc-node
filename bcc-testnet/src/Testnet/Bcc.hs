@@ -204,7 +204,7 @@ testnet testnetOptions H.Conf {..} = do
     . HM.insert "AurumGenesisFile" (J.toJSON @String "sophie/genesis.aurum.json")
     . HM.insert "RequiresNetworkMagic" (J.toJSON @String "RequiresMagic")
     . HM.insert "LastKnownBlockVersion-Major" (J.toJSON @Int 1)
-    . HM.insert "LastKnownBlockVersion-Minor" (J.toJSON @Int 0)
+    . HM.insert "LastKnownBlockVersion-Sentry" (J.toJSON @Int 0)
     . HM.insert "TraceBlockchainTime" (J.toJSON True)
     . HM.delete "GenesisFile"
     . HM.insert "TestEnableDevelopmentHardForkEras" (J.toJSON @Bool True)
@@ -326,8 +326,7 @@ testnet testnetOptions H.Conf {..} = do
     , "--testnet-magic", show @Int testnetMagic
     , "--signing-key", tempAbsPath </> "cole/delegate-keys.000.key"
     , "--protocol-version-major", "1"
-    , "--protocol-version-minor", "0"
-    , "--protocol-version-alt", "0"
+    , "--protocol-version-sentry", "0"
     , "--application-name", "bcc-sl"
     , "--software-version-num", "1"
     , "--system-tag", "linux"
@@ -350,8 +349,7 @@ testnet testnetOptions H.Conf {..} = do
     , "--testnet-magic", show @Int testnetMagic
     , "--signing-key", tempAbsPath </> "cole/delegate-keys.000.key"
     , "--protocol-version-major", "2"
-    , "--protocol-version-minor", "0"
-    , "--protocol-version-alt", "0"
+    , "--protocol-version-sentry", "0"
     , "--application-name", "bcc-sl"
     , "--software-version-num", "1"
     , "--system-tag", "linux"

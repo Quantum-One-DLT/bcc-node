@@ -1,3 +1,4 @@
+
 .. raw:: html
 
   <p align="center">
@@ -21,22 +22,21 @@
 
 THIS IS NOT A PRODUCTION READY REPO. IF YOU FOLLOW THE BUILD STEPS BELOW, IT WILL COMPILE, IT WILL RUN. HOWEVER, THE CURRENT HYDRA INSTANCE AT hydra.quantumone.network is NOT a PRODUCTION INSTANCE NOR IS IT SET UP IN ITS ENTIRETY TO HANDLE LOW LEVEL CI&D. THERE ARE TIMES WHERE YOU WILL FIND THAT ITS DOWN. IT EXISTS FOR DEMONSTRATION PURPOSES. YOU WILL FIND URL LINKS WITHIN THE README FILE THAT DO NOT WORK. ULTIMATELY, I PLAN TO ENABLE ANOTHER DEMO HYDRA at hydra.tbco.io & UPGRADE HYDRA.QUANTUMONE.NETWORK TO A PRODUCTION LEVEL INSTANCE. THE FORK AT QUANTUM-ONE-DLT GITHUB ORG WILL BE THE PRODUCTION/MAIN REPOS FOR QUANTUM ONE DAO. NEITHER OF THE TWO SETS OF REPOS HAVE BEEN SIGNIFICANTLY MODIFIED SINCE OCTOBER 2021 NOR DO THEY ADDRESS THE ISSUES CARDANO PLANS TO ADDRESS WITH THE VASIL FORK.
 
-==================
-
-**IMPORTANT** IF YOU ATTEMPT TO RUN, FOR EXAMPLE, A COLE-TO-SOPHIE EXAMPLE BY UTILIZING SCRIPTS/COLE-TO-SOPHIE/MKFILES.SH, YOU MUST MODIFY THE CONFIGURATION FILE GENERATED AT example/configuration.yaml. YOU MUST REMOVE THE ALT PROTOCOL & CHANGE THE MINOR PROTOCOL TO THE SENTRY PROTOCOL OR UPDATE THE SCRIPT ITSELF. THAT IS ONE OF THE MANY MINOR YET IMPORTANT THINGS THAT MUST BE ADDRESSED BEFORE THIS DEMO COULD BE COVERTED TO A PUBLIC TEST-NET
-
-IF ANYONE NEEDS ASSISTANCE IN REPLICATING THE VIDEO DEMOS WHERE I'VE SHOWN THIS RUNNING PLEASE EMAIL DEVOPS@BLOCKCHAIN-COMPANY.IO - THANK YOU!!
-
 =================
-API Documentation --THIS NEEDS MOVED TO Quantum-One-DLT.github.io but in the meantime is accessbile as shown below.
+API Documentation
 =================
+
 The API documentation is published `here <https://The-Blockchain-Company.github.io/>`_.
 
+The documentation is built with each push, but is only published from `master` branch.  In order to
+test if the documentation is working, build the documentation locally with `./scripts/haddocs.sh` and
+open `haddocks/index.html` in the browser.
 
 *************************
 ``bcc-node`` Overview
 *************************
-**** Compile, build and, run bcc-node and BCC ecosystem using Cabal and GHC on  Nixos, Linux or WSL2. Hydra is in process of being enabled at hydra.quantumone.network. The Quick Build shown below is the quickest way to build and run Bcc-Node & Bcc-CLI. The Bcc-Chain is now the basis for the Quantum One DAO LLC's Quantum One Ecosystem. Learn more at https://github.com/Quantum-One-DLT  ****
+
+**** Compile, build and, run bcc-node and BCC ecosystem using Cabal and GHC on Nixos, Linux or WSL2. Hydra is now enabled at hydra.quantumone.network in prepapration for Quantum One Ecosystem public testnet. The Quick Build shown below is the quickest way to build and run Bcc-Node & Bcc-CLI. The Bcc-Chain is now the basis for the Quantum One DAO LLC's Quantum One Ecosystem. Hydra is running for demonstration purposes and is not a production version. When we are ready to launch public test net, hydra will be converted to a production instance. Learn more at https://github.com/Quantum-One-DLT  ****
 
 Integration of the `ledger <https://github.com/The-Blockchain-Company/bcc-ledger-specs>`_, `consensus <https://github.com/The-Blockchain-Company/shardagnostic-network/tree/master/shardagnostic-consensus>`_,
 `networking <https://github.com/The-Blockchain-Company/shardagnostic-network/tree/master/shardagnostic-network>`_ and
@@ -53,7 +53,7 @@ Integration of the `ledger <https://github.com/The-Blockchain-Company/bcc-ledger
   backend and explorer backend are separate components that run in separate
   external processes that communicate with the node via local IPC.
 
-Network Configuration, Genesis and Topology Files - Hydra is in process of being enabled at hydra.quantumone.network and is not enabled at the below URL.  
+Network Configuration, Genesis and Topology Files - THIS LINK IS NOT VALID. 
 =================================================
 
 The latest supported networks can be found at `<https://hydra.tbco.io/job/Bcc/bcc-node/bcc-deployment/latest-finished/download/1/index.html>`_
@@ -152,7 +152,7 @@ Update Cabal and Verify Install
     cabal --version
     ghc --version
 
-Cabal version should be 3.4.0.0 and ghc should be 8.10.4 (although 8.10.5 and 9 will work as well)
+Cabal version should be 3.4.0.0 and ghc should be 8.10.4 
 
 .. code-block:: console
 
@@ -166,6 +166,7 @@ Cabal version should be 3.4.0.0 and ghc should be 8.10.4 (although 8.10.5 and 9 
 
     echo -e "package bcc-crypto-optimum\n flags: -external-libsodium-vrf" > cabal.project.local
     sed -i $HOME/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
+    rm -rf $HOME/git/bcc-node/dist-newstyle/build/x86_64-linux/ghc-8.10.4 to reset previous build folder
     cabal build all
 
 Copy Node and CLI files to bin
@@ -184,18 +185,20 @@ Test Versioning with
     bcc-node --version
 
 
-Copy Node and CLI files to bin
-
-sudo cp $(find $HOME/git/bcc-node/dist-newstyle/build -type f -name "bcc-cli") /usr/local/bin/bcc-cli
-
-sudo cp $(find $HOME/git/bcc-node/dist-newstyle/build -type f -name "bcc-node") /usr/local/bin/bcc-node
-
-Test Versioning with bcc-cli --version and or bcc-node --version to verify build
-
-Additional build methods - We are in the process of enabling documentation @ docs.quantumone.network
+Additional build methods -
 ========================
 
-Documentation for building the node can be found `here <https://docs.bcc.org/getting-started/installing-the-bcc-node>`_.
+Docker image - 
+============
+
+You can pull the docker image with the latest version of bcc-node from `here <https://hub.docker.com/r/tbco/bcc-node>`_.
+
+.. code-block:: console
+
+    docker pull tbco/bcc-node
+
+
+Additional documentation for building the node will be available soon. 
 
 Linux Executable - We are moving Hydra to hydra.quantumone.network for public testing. Hydra below is not enabled. 
 ==================
@@ -223,14 +226,6 @@ The download includes bcc-node.exe and a .dll. To run the node with bcc-node run
 
     bcc-node.exe run --topology ./mainnet-topology.json --database-path ./state --port 3001 --config ./configuration-mainnet.yaml --socket-path \\.\pipe\bcc-node
 
-Docker image - Images will be available soon under quantumone.network 
-============
-
-You can pull the docker image with the latest version of bcc-node from `here <https://hub.docker.com/r/tbco/bcc-node>`_.
-
-.. code-block:: console
-
-    docker pull tbco/bcc-node
 
 ``bcc-node``
 ================
@@ -505,8 +500,7 @@ A Cole update proposal can be created as follows:
                     (--mainnet | --testnet-magic NATURAL)
                     --signing-key FILEPATH
                     --protocol-version-major WORD16
-                    --protocol-version-minor WORD16
-                    --protocol-version-alt WORD8
+                    --protocol-version-sentry WORD16
                     --application-name STRING
                     --software-version-num WORD32
                     --system-tag STRING
@@ -514,7 +508,7 @@ A Cole update proposal can be created as follows:
                     --filepath FILEPATH
                   ..
 
-The mandatory arguments are ``--mainnet | --testnet-magic``, ``signing-key``, ``protocol-version-major``, ``protocol-version-minor``, ``protocol-version-alt``, ``application-name``, ``software-version-num``, ``system-tag``, ``installer-hash`` and ``filepath``.
+The mandatory arguments are ``--mainnet | --testnet-magic``, ``signing-key``, ``protocol-version-major``, ``protocol-version-sentry``, ``application-name``, ``software-version-num``, ``system-tag``, ``installer-hash`` and ``filepath``.
 
 The remaining arguments are optional parameters you want to update in your update proposal.
 
@@ -612,23 +606,15 @@ You can validate Cole era blocks, delegation certificates, txs and update propos
 ``cabal exec bcc-cli -- validate-cbor --cole-block 21600 --filepath CBOREncodedColeBlockFile``
 
 
-Native Tokens #TODO
+Native Tokens
 =======================================
 
 Native tokens is a new feature that enables the transacting of multi-assets on Bcc. Native tokens are now supported on mainnet and users can transact with bcc, and an unlimited number of user-defined (custom) tokens natively.
 
-To help you get started we have compiled a handy list of resources:
+To help you get started we have compiled a handy list of resources:  #TODO
 
 `Bcc Forum discussion <https://forum.bcc.org/c/developers/bcc-tokens/150>`_
 
 `Documentation for native tokens <https://docs.bcc.org/native-tokens/learn>`_
 
 You can also read more about `native tokens and how they compare to bcc and ERC20 <https://github.com/The-Blockchain-Company/bcc-ledger-specs/blob/master/doc/explanations/features.rst>`_. Browse native tokens created on the Bcc blockchain and see their transactions in an interactive dashboard that allows filtering and searching: nativetokens.da.iogservices.io.
-
-API Documentation
-=================
-The API documentation is published `here <https://The-Blockchain-Company.github.io/>`_.
-
-The documentation is built with each push, but is only published from `master` branch.  In order to
-test if the documentation is working, build the documentation locally with `./scripts/haddocs.sh` and
-open `haddocks/index.html` in the browser.
